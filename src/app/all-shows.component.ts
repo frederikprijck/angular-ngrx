@@ -1,37 +1,30 @@
-import { Component } from '@angular/core';
-import { ShowsService } from './shows/shows.service';
-import { Subject } from 'rxjs';
+import { Component } from "@angular/core";
+import { ShowsService } from "./shows/shows.service";
+import { Subject } from "rxjs";
 
-import { switchMap, startWith, map } from 'rxjs/operators';
+import { Store, select } from "@ngrx/store";
+import { selectShows } from "./state/selectors";
+import * as showsActions from "./state/actions";
 
 @Component({
-  selector: 'app-all-shows',
-  templateUrl: './all-shows.component.html'
+  selector: "app-all-shows",
+  templateUrl: "./all-shows.component.html"
 })
 export class AllShowsComponent {
   refreshShows$ = new Subject();
-  shows$ = this.refreshShows$.pipe(
-    startWith(null),
-    switchMap(() => this.showsService.getAll())
-  );
+  shows$ = this.store.pipe(select(selectShows));
 
-  constructor(private showsService: ShowsService) {}
+  constructor(private showsService: ShowsService, private store: Store<any>) {}
 
   favoriteShow(showId) {
-    this.showsService
-      .favoriteShow(showId)
-      .subscribe(() => this.refreshShows$.next());
+    this.store.dispatch(showsActions.favoriteShowClicked({ showId }));
   }
 
   unfavoriteShow(showId) {
-    this.showsService
-      .unfavoriteShow(showId)
-      .subscribe(() => this.refreshShows$.next());
+    this.store.dispatch(showsActions.unfavoriteShowClicked({ showId }));
   }
 
   removeShow(showId) {
-    this.showsService
-      .removeShow(showId)
-      .subscribe(() => this.refreshShows$.next());
+    this.store.dispatch(showsActions.removeShowClicked({ showId }));
   }
 }

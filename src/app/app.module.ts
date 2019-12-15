@@ -11,6 +11,10 @@ import { AppComponent } from './app.component';
 import { ShowsComponent } from './shows/shows.component';
 import { AllShowsComponent } from './all-shows.component';
 import { FavoriteShowsComponent } from './favorite-shows.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer as showReducer } from './state/reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ShowsEffects } from './state/effects';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,9 @@ import { FavoriteShowsComponent } from './favorite-shows.component';
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    StoreModule.forRoot({ shows: showReducer }),
+    EffectsModule.forRoot([ShowsEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { ShowsService } from './shows/shows.service';
 import { Subject } from 'rxjs';
 
-import { switchMap, startWith, map } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { selectFavoriteShows } from './state/selectors';
+import * as showsActions from './state/actions';
 
 @Component({
   selector: 'app-favorite-shows',
@@ -10,29 +12,19 @@ import { switchMap, startWith, map } from 'rxjs/operators';
 })
 export class FavoriteShowsComponent {
   refreshShows$ = new Subject();
-  shows$ = this.refreshShows$.pipe(
-    startWith(null),
-    switchMap(() => this.showsService.getAll()),
-    map(shows => shows.filter(show => show.isFavorite))
-  );
+  shows$ = this.store.pipe(select(selectFavoriteShows))
 
-  constructor(private showsService: ShowsService) {}
+  constructor(private showsService: ShowsService, private store: Store<any>) {}
 
   favoriteShow(showId) {
-    this.showsService
-      .favoriteShow(showId)
-      .subscribe(() => this.refreshShows$.next());
+    this.store.dispatch(showsActions.favoriteShowClicked({ showId }));
   }
 
   unfavoriteShow(showId) {
-    this.showsService
-      .unfavoriteShow(showId)
-      .subscribe(() => this.refreshShows$.next());
+    this.store.dispatch(showsActions.unfavoriteShowClicked({ showId }));
   }
 
   removeShow(showId) {
-    this.showsService
-      .removeShow(showId)
-      .subscribe(() => this.refreshShows$.next());
+    this.store.dispatch(showsActions.removeShowClicked({ showId }));
   }
 }

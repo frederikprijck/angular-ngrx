@@ -1,7 +1,8 @@
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 export interface Show {
+  id: number;
   name: string;
   description: string;
   imgUrl: string;
@@ -47,7 +48,7 @@ let shows = [
 
 @Injectable({ providedIn: 'root' })
 export class ShowsService {
-  getAll() {
+  getAll(): Observable<Array<Show>> {
     return of(shows);
   }
 
