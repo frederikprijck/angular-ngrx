@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ShowsService } from './shows/shows.service';
-import { Subject } from 'rxjs';
 
 import { Store, select } from '@ngrx/store';
 import { selectFavoriteShows } from './state/selectors';
@@ -11,7 +10,6 @@ import * as showsActions from './state/actions';
   templateUrl: './favorite-shows.component.html'
 })
 export class FavoriteShowsComponent {
-  refreshShows$ = new Subject();
   shows$ = this.store.pipe(select(selectFavoriteShows))
 
   constructor(private showsService: ShowsService, private store: Store<any>) {}

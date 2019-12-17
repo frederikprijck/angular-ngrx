@@ -1,21 +1,26 @@
-import { createReducer, on, Action } from "@ngrx/store";
-import * as showsActions from "./actions";
-import { Show } from "../shows/shows.service";
+import { createReducer, on, Action } from '@ngrx/store';
+import { Show } from '../shows/shows.service';
+import {
+  getAllSuccess,
+  favoriteShowSuccess,
+  unfavoriteShowSuccess,
+  removeShowSuccess
+} from './actions';
 
 const showsReducer = createReducer<Array<Show>>(
   [],
-  on(showsActions.getAllSuccess, (state, { shows }) => [...shows]),
-  on(showsActions.favoriteShowClicked, (state, { showId }) =>
+  on(getAllSuccess, (state, { shows }) => [...shows]),
+  on(favoriteShowSuccess, (state, { showId }) =>
     state.map(show =>
       show.id === showId ? { ...show, isFavorite: true } : show
     )
   ),
-  on(showsActions.unfavoriteShowClicked, (state, { showId }) =>
+  on(unfavoriteShowSuccess, (state, { showId }) =>
     state.map(show =>
       show.id === showId ? { ...show, isFavorite: false } : show
     )
   ),
-  on(showsActions.removeShowClicked, (state, { showId }) =>
+  on(removeShowSuccess, (state, { showId }) =>
     state.filter(show => show.id !== showId)
   )
 );

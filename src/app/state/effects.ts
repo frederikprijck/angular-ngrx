@@ -1,21 +1,58 @@
-import { Injectable } from "@angular/core";
-import { createEffect, ofType, Actions } from "@ngrx/effects";
-import * as showsActions from "./actions";
-import { ShowsService } from "../shows/shows.service";
-import { exhaustMap, map } from "rxjs/operators";
-import { of } from "rxjs";
-
-const x = of(showsActions.getAllSuccess({ shows: null }));
+import { Injectable } from '@angular/core';
+import { createEffect, ofType, Actions } from '@ngrx/effects';
+import {
+  appLoaded,
+  getAllSuccess,
+  favoriteShowClicked,
+  favoriteShowSuccess,
+  unfavoriteShowClicked,
+  unfavoriteShowSuccess,
+  removeShowClicked,
+  removeShowSuccess
+} from './actions';
+import { ShowsService } from '../shows/shows.service';
+import { exhaustMap, map, mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class ShowsEffects {
-  login$ = createEffect(() =>
+  getAllShows$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(showsActions.appLoaded),
+      ofType(appLoaded),
       exhaustMap(() =>
+        this.showsService.getAll().pipe(map(shows => getAllSuccess({ shows })))
+      )
+    )
+  );
+
+  favoriteShow$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(favoriteShowClicked),
+      mergeMap(({ showId }) =>
         this.showsService
-          .getAll()
-          .pipe(map(shows => showsActions.getAllSuccess({ shows })))
+          .favoriteShow(showId)
+          .pipe(map(() => favoriteShowSuccess({ showId })))
+      )
+    )
+  );
+
+  unfavoriteShow$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(unfavoriteShowClicked),
+      mergeMap(({ showId }) =>
+        this.showsService
+          .unfavoriteShow(showId)
+          .pipe(map(() => unfavoriteShowSuccess({ showId })))
+      )
+    )
+  );
+
+  removeShow$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeShowClicked),
+      mergeMap(({ showId }) =>
+        this.showsService
+          .removeShow(showId)
+          .pipe(map(() => removeShowSuccess({ showId })))
       )
     )
   );
