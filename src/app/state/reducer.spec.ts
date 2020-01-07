@@ -1,18 +1,18 @@
-import * as fromReducer from "./reducer";
+import * as fromReducer from './reducer';
 import {
   getAllSuccess,
   favoriteShowSuccess,
   unfavoriteShowSuccess,
   removeShowSuccess
-} from "./actions";
-import { Show } from "../shows/shows.service";
+} from './actions';
+import { Show } from '../shows/shows.service';
 
-describe("ShowsReducer", () => {
-  describe("undefined action", () => {
-    it("should return the default state", () => {
+describe('ShowsReducer', () => {
+  describe('unknown action', () => {
+    it('should return the default state', () => {
       const { initialState } = fromReducer;
       const action = {
-        type: ""
+        type: 'Unknown'
       };
       const state = fromReducer.reducer(initialState, action);
 
@@ -20,15 +20,15 @@ describe("ShowsReducer", () => {
     });
   });
 
-  describe("getAllSuccess action", () => {
-    it("should update the state in an immutable way", () => {
+  describe('getAllSuccess action', () => {
+    it('should update the state in an immutable way', () => {
       const { initialState } = fromReducer;
       const newState: Array<Show> = [
         {
           id: 1,
-          name: "Test",
-          description: "Description",
-          imgUrl: "",
+          name: 'Test',
+          description: 'Description',
+          imgUrl: '',
           isFavorite: false
         }
       ];
@@ -40,14 +40,14 @@ describe("ShowsReducer", () => {
     });
   });
 
-  describe("favoriteShowSuccess action", () => {
-    it("should update the state in an immutable way", () => {
+  describe('favoriteShowSuccess action', () => {
+    it('should update the state in an immutable way', () => {
       const initialState: Array<Show> = [
         {
           id: 1,
-          name: "Test",
-          description: "Description",
-          imgUrl: "",
+          name: 'Test',
+          description: 'Description',
+          imgUrl: '',
           isFavorite: false
         }
       ];
@@ -57,13 +57,13 @@ describe("ShowsReducer", () => {
       expect(state[0].isFavorite).toEqual(true);
     });
 
-    it("should not update the state", () => {
+    it('should not update the state when showId does not exist', () => {
       const initialState: Array<Show> = [
         {
           id: 1,
-          name: "Test",
-          description: "Description",
-          imgUrl: "",
+          name: 'Test',
+          description: 'Description',
+          imgUrl: '',
           isFavorite: false
         }
       ];
@@ -74,14 +74,14 @@ describe("ShowsReducer", () => {
     });
   });
 
-  describe("unfavoriteShowSuccess action", () => {
-    it("should update the state in an immutable way", () => {
+  describe('unfavoriteShowSuccess action', () => {
+    it('should update the state in an immutable way', () => {
       const initialState: Array<Show> = [
         {
           id: 1,
-          name: "Test",
-          description: "Description",
-          imgUrl: "",
+          name: 'Test',
+          description: 'Description',
+          imgUrl: '',
           isFavorite: true
         }
       ];
@@ -91,13 +91,13 @@ describe("ShowsReducer", () => {
       expect(state[0].isFavorite).toEqual(false);
     });
 
-    it("should not update the state", () => {
+    it('should not update the state when showId does not exist', () => {
       const initialState: Array<Show> = [
         {
           id: 1,
-          name: "Test",
-          description: "Description",
-          imgUrl: "",
+          name: 'Test',
+          description: 'Description',
+          imgUrl: '',
           isFavorite: true
         }
       ];
@@ -108,14 +108,14 @@ describe("ShowsReducer", () => {
     });
   });
 
-  describe("removeShowSuccess action", () => {
-    it("should update the state in an immutable way", () => {
+  describe('removeShowSuccess action', () => {
+    it('should update the state in an immutable way', () => {
       const initialState: Array<Show> = [
         {
           id: 1,
-          name: "Test",
-          description: "Description",
-          imgUrl: "",
+          name: 'Test',
+          description: 'Description',
+          imgUrl: '',
           isFavorite: true
         }
       ];
@@ -125,13 +125,13 @@ describe("ShowsReducer", () => {
       expect(state.length).toEqual(0);
     });
 
-    it("should not update the state", () => {
+    it('should not update the state when showId does not exist', () => {
       const initialState: Array<Show> = [
         {
           id: 1,
-          name: "Test",
-          description: "Description",
-          imgUrl: "",
+          name: 'Test',
+          description: 'Description',
+          imgUrl: '',
           isFavorite: true
         }
       ];

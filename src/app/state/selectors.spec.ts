@@ -1,21 +1,21 @@
-import * as fromSelectors from "./selectors";
+import * as fromSelectors from './selectors';
 import { Show } from '../shows/shows.service';
 
-describe("Selectors", () => {
-  it("should select the favorite shows", () => {
+describe('Selectors', () => {
+  it('should select the favorite shows', () => {
     const initialState: Array<Show> = [
       {
         id: 1,
-        name: "Test",
-        description: "Description",
-        imgUrl: "",
+        name: 'Test',
+        description: 'Description',
+        imgUrl: '',
         isFavorite: true
       },
       {
         id: 2,
-        name: "Test",
-        description: "Description",
-        imgUrl: "",
+        name: 'Test',
+        description: 'Description',
+        imgUrl: '',
         isFavorite: false
       }
     ];

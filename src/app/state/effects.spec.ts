@@ -1,33 +1,31 @@
-import { Observable } from "rxjs";
-import { TestBed } from "@angular/core/testing";
-import { ShowsEffects } from "./effects";
-import { provideMockActions } from "@ngrx/effects/testing";
-import { Store } from "@ngrx/store";
-import { MockStore, provideMockStore } from "@ngrx/store/testing";
+import { Observable } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
+import { ShowsEffects } from './effects';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Store } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
   appLoaded,
   getAllSuccess,
   favoriteShowSuccess,
-  favoriteShowClicked,
-  unfavoriteShowClicked,
   unfavoriteShowSuccess,
-  removeShowClicked,
-  removeShowSuccess
-} from "./actions";
+  removeShowSuccess,
+  allShowsActions,
+} from './actions';
 
-import { TestScheduler } from "rxjs/testing";
-import { ShowsService } from "../shows/shows.service";
+import { TestScheduler } from 'rxjs/testing';
+import { ShowsService } from '../shows/shows.service';
 
-describe("OriginEffects", () => {
+describe('OriginEffects', () => {
   const initialState = { shows: [] };
+  const showsService = jasmine.createSpyObj('showsService', [
+    'getAll',
+    'favoriteShow',
+    'unfavoriteShow',
+    'removeShow'
+  ]);
   let effects: ShowsEffects;
   let actions: Observable<any>;
-  let showsService = jasmine.createSpyObj("showsService", [
-    "getAll",
-    "favoriteShow",
-    "unfavoriteShow",
-    "removeShow"
-  ]);
   let store: MockStore<any>;
   let testScheduler;
 
@@ -50,72 +48,72 @@ describe("OriginEffects", () => {
     });
   });
 
-  it("should be created", () => {
+  it('should be created', () => {
     expect(effects).toBeTruthy();
   });
 
-  describe("getAllShows$", () => {
-    it("should return action", () => {
+  describe('getAllShows$', () => {
+    it('should handle appLoaded and return a getAllSuccess action', () => {
       const shows = [];
       const action = appLoaded();
       const outcome = getAllSuccess({ shows });
 
       testScheduler.run(({ hot, cold, expectObservable }) => {
-        actions = hot("-a", { a: action });
-        const response = cold("-b|", { b: shows });
+        actions = hot('-a', { a: action });
+        const response = cold('-b|', { b: shows });
         showsService.getAll.and.returnValue(response);
 
-        expectObservable(effects.getAllShows$).toBe("--b", { b: outcome });
+        expectObservable(effects.getAllShows$).toBe('--b', { b: outcome });
       });
     });
   });
 
-  describe("favoriteShow$", () => {
-    it("should return action", () => {
+  describe('favoriteShow$', () => {
+    it('should handle allShowsActions.favoriteShowClicked and return a favoriteShowSuccess action', () => {
       const showId = 1;
-      const action = favoriteShowClicked({ showId });
+      const action = allShowsActions.favoriteShowClicked({ showId });
       const outcome = favoriteShowSuccess({ showId });
 
       testScheduler.run(({ hot, cold, expectObservable }) => {
-        actions = hot("-a", { a: action });
-        const response = cold("-b|", { b: "a" });
+        actions = hot('-a', { a: action });
+        const response = cold('-b|', { b: 'a' });
         showsService.favoriteShow.and.returnValue(response);
 
-        expectObservable(effects.favoriteShow$).toBe("--b", { b: outcome });
+        expectObservable(effects.favoriteShow$).toBe('--b', { b: outcome });
       });
     });
   });
 
-  describe("unfavoriteShow$", () => {
-    it("should return action", () => {
+  describe('unfavoriteShow$', () => {
+    it('should handle allShowsActions.unfavoriteShowClicked and return a unfavoriteShowSuccess action', () => {
       const showId = 1;
-      const action = unfavoriteShowClicked({ showId });
+      const action = allShowsActions.unfavoriteShowClicked({ showId });
       const outcome = unfavoriteShowSuccess({ showId });
 
       testScheduler.run(({ hot, cold, expectObservable }) => {
-        actions = hot("-a", { a: action });
-        const response = cold("-b|", { b: "a" });
+        actions = hot('-a', { a: action });
+        const response = cold('-b|', { b: 'a' });
         showsService.unfavoriteShow.and.returnValue(response);
 
-        expectObservable(effects.unfavoriteShow$).toBe("--b", {
+        expectObservable(effects.unfavoriteShow$).toBe('--b', {
           b: outcome
         });
       });
     });
   });
 
-  describe("removeShow$", () => {
-    it("should return action", () => {
+  describe('removeShow$', () => {
+    it('should handle allShowsActions.removeShowClicked and return a removeShowSuccess action', () => {
       const showId = 1;
-      const action = removeShowClicked({ showId });
+      const action = allShowsActions.removeShowClicked({ showId });
       const outcome = removeShowSuccess({ showId });
 
       testScheduler.run(({ hot, cold, expectObservable }) => {
-        actions = hot("-a", { a: action });
-        const response = cold("-b|", { b: "a" });
+        actions = hot('-a', { a: action });
+        const response = cold('-b|', { b: 'a' });
         showsService.removeShow.and.returnValue(response);
 
-        expectObservable(effects.removeShow$).toBe("--b", {
+        expectObservable(effects.removeShow$).toBe('--b', {
           b: outcome
         });
       });
