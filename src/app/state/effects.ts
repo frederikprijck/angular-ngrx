@@ -3,15 +3,15 @@ import { createEffect, ofType, Actions } from '@ngrx/effects';
 import {
   appLoaded,
   getAllSuccess,
-  favoriteShowClicked,
   favoriteShowSuccess,
-  unfavoriteShowClicked,
   unfavoriteShowSuccess,
-  removeShowClicked,
-  removeShowSuccess
+  removeShowSuccess,
+  allShowsActions,
+  favoriteShowsActions
 } from './actions';
 import { ShowsService } from '../shows/shows.service';
-import { exhaustMap, map, mergeMap } from 'rxjs/operators';
+import { exhaustMap, map, mergeMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable()
 export class ShowsEffects {
@@ -26,33 +26,33 @@ export class ShowsEffects {
 
   favoriteShow$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(favoriteShowClicked),
+      ofType(allShowsActions.favoriteShowClicked, favoriteShowsActions.favoriteShowClicked),
       mergeMap(({ showId }) =>
         this.showsService
           .favoriteShow(showId)
-          .pipe(map(() => favoriteShowSuccess({ showId })))
+          .pipe(map(() => favoriteShowSuccess({ showId })), catchError(error => of(null)))
       )
     )
   );
 
   unfavoriteShow$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(unfavoriteShowClicked),
+      ofType(allShowsActions.unfavoriteShowClicked, favoriteShowsActions.unfavoriteShowClicked),
       mergeMap(({ showId }) =>
         this.showsService
           .unfavoriteShow(showId)
-          .pipe(map(() => unfavoriteShowSuccess({ showId })))
+          .pipe(map(() => unfavoriteShowSuccess({ showId })), catchError(error => of(null)))
       )
     )
   );
 
   removeShow$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(removeShowClicked),
+      ofType(allShowsActions.removeShowClicked, favoriteShowsActions.removeShowClicked),
       mergeMap(({ showId }) =>
         this.showsService
           .removeShow(showId)
-          .pipe(map(() => removeShowSuccess({ showId })))
+          .pipe(map(() => removeShowSuccess({ showId })), catchError(error => of(null)))
       )
     )
   );

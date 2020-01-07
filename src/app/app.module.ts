@@ -15,6 +15,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducer as showReducer } from './state/reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ShowsEffects } from './state/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from './../environments/environment';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,11 @@ import { ShowsEffects } from './state/effects';
     MatCardModule,
     MatButtonModule,
     StoreModule.forRoot({ shows: showReducer }),
-    EffectsModule.forRoot([ShowsEffects])
+    EffectsModule.forRoot([ShowsEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

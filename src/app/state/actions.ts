@@ -6,24 +6,44 @@ export const getAllSuccess = createAction(
   '[Shows API] Get all shows success',
   props<{ shows }>()
 );
-
-
-export const favoriteShowClicked = createAction(
-  '[Shows] favorite show',
-  props<{ showId }>()
-);
-
-export const unfavoriteShowClicked = createAction(
-  '[Shows] unfavorite show',
-  props<{ showId }>()
-);
-
-export const removeShowClicked = createAction(
-  '[Shows] remove show',
-  props<{ showId }>()
-);
-
 export const getAllFailed = createAction('[Shows API] Get all shows failed');
+
+
+export const allShowsActions = {
+  favoriteShowClicked: createAction(
+    '[All Shows] favorite show',
+    props<{ showId }>()
+  ),
+
+  unfavoriteShowClicked: createAction(
+    '[All Shows] unfavorite show',
+    props<{ showId }>()
+  ),
+
+  removeShowClicked: createAction(
+    '[All Shows] remove show',
+    props<{ showId }>()
+  )
+};
+
+export const favoriteShowsActions = {
+  favoriteShowClicked: createAction(
+    '[Favorite Shows] favorite show',
+    props<{ showId }>()
+  ),
+
+  unfavoriteShowClicked: createAction(
+    '[Favorite Shows] unfavorite show',
+    props<{ showId }>()
+  ),
+
+  removeShowClicked: createAction(
+    '[Favorite Shows] remove show',
+    props<{ showId }>()
+  )
+};
+
+
 
 export const favoriteShowSuccess = createAction(
   '[Shows API] favorite show success',

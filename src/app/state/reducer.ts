@@ -7,8 +7,10 @@ import {
   removeShowSuccess
 } from './actions';
 
+export const initialState = [];
+
 const showsReducer = createReducer<Array<Show>>(
-  [],
+  initialState,
   on(getAllSuccess, (state, { shows }) => [...shows]),
   on(favoriteShowSuccess, (state, { showId }) =>
     state.map(show =>

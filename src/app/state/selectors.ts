@@ -1,9 +1,5 @@
-import { createSelector } from "@ngrx/store";
-import { Show } from "../shows/shows.service";
-
-export interface AppState {
-  shows: Array<Show>;
-}
+import { createSelector } from '@ngrx/store';
+import { AppState } from './state';
 
 export const selectShows = (state: AppState) => state.shows;
 export const selectFavoriteShows = createSelector(
