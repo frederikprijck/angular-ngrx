@@ -15,7 +15,7 @@ import { By } from '@angular/platform-browser';
 import { Show } from './shows/shows.service';
 import { selectFavoriteShows } from './state/selectors';
 
-describe('Auth Guard', () => {
+describe('FavoriteShowsComponent', () => {
   let fixture: ComponentFixture<FavoriteShowsComponent>;
   let component: FavoriteShowsComponent;
   let store: MockStore<{ shows: Array<Show> }>;

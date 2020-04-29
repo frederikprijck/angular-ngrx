@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { By } from '@angular/platform-browser';
 import { Show } from './shows/shows.service';
 
-describe('Auth Guard', () => {
+describe('AllShowsComponent', () => {
   let fixture: ComponentFixture<AllShowsComponent>;
   let component: AllShowsComponent;
   let store: MockStore<{ shows: Array<Show> }>;
@@ -100,15 +100,4 @@ describe('Auth Guard', () => {
     fixture.detectChanges();
     expect(fixture.debugElement.queryAll(By.css('.mat-card')).length).toBe(1);
   });
-
-  /*describe('selectors', () => {
-    let mockShowsSelector;
-    beforeEach(() => {
-      mockShowsSelector = store.overrideSelector(fromAuth.getUsername, 'John');
-    });
-
-    it('should render all shows', () => {
-      expect(fixture.debugElement.queryAll(By.css('.mat-card')).length).toBe(2);
-    });
-  })*/
 });

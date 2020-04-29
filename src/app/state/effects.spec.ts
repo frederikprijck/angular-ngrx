@@ -16,7 +16,7 @@ import {
 import { TestScheduler } from 'rxjs/testing';
 import { ShowsService } from '../shows/shows.service';
 
-describe('OriginEffects', () => {
+describe('ShowsEffects', () => {
   const initialState = { shows: [] };
   const showsService = jasmine.createSpyObj('showsService', [
     'getAll',
