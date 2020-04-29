@@ -2,7 +2,6 @@ import { Observable } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { ShowsEffects } from './effects';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
   appLoaded,
@@ -39,8 +38,8 @@ describe('ShowsEffects', () => {
       ]
     });
 
-    effects = TestBed.get(ShowsEffects);
-    store = TestBed.get(Store);
+    effects = TestBed.inject(ShowsEffects);
+    store = TestBed.inject(MockStore);
     store.setState({});
 
     testScheduler = new TestScheduler((actual, expected) => {

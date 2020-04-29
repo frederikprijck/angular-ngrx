@@ -1,5 +1,4 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Store } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 import { AppState } from './state/state';
@@ -12,12 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { By } from '@angular/platform-browser';
-import { Show } from './shows/shows.service';
 
 describe('AllShowsComponent', () => {
   let fixture: ComponentFixture<AllShowsComponent>;
   let component: AllShowsComponent;
-  let store: MockStore<{ shows: Array<Show> }>;
+  let store: MockStore<AppState>;
   const initialState = {
     shows: [
       {
@@ -50,7 +48,7 @@ describe('AllShowsComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
-    store = TestBed.get<Store<AppState>>(Store);
+    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(AllShowsComponent);
     component = fixture.componentInstance;
 
